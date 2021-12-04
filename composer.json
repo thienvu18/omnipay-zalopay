@@ -1,0 +1,38 @@
+{
+    "name": "thienvu18/omnipay-zalopay",
+    "type": "library",
+    "description": "ZaloPay driver for the Omnipay payment processing library",
+    "keywords": [
+        "vietnam-payment",
+        "payment-gateway",
+        "vietnam-payment-gateway",
+        "gateway",
+        "merchant",
+        "omnipay",
+        "pay",
+        "payment",
+        "zalopay"
+    ],
+    "homepage": "https://github.com/thienvu18/omnipay-zalopay",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vu Thai",
+            "email": "thienvu1802@gmail.com"
+        },
+        {
+            "name": "Omnipay Contributors",
+            "homepage": "https://github.com/thephpleague/omnipay-stripe/contributors"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "omnipay/common": "^3.0"
+    },
+    "autoload": {
+        "psr-4": { "Omnipay\\ZaloPay\\" : "src/" }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
