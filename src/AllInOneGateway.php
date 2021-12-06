@@ -5,6 +5,7 @@ namespace Omnipay\ZaloPay;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\ZaloPay\Message\AllInOne\Callback;
 use Omnipay\ZaloPay\Message\AllInOne\CallbackReturnRequest;
+use Omnipay\ZaloPay\Message\AllInOne\FetchTransactionRequest;
 use Omnipay\ZaloPay\Message\AllInOne\GetPaymentMethodRequest;
 use Omnipay\ZaloPay\Message\AllInOne\NotificationRequest;
 use Omnipay\ZaloPay\Message\AllInOne\PurchaseCompleteRequest;
@@ -95,6 +96,15 @@ class AllInOneGateway extends AbstractGateway
     public function completePurchase(array $options = []): PurchaseCompleteRequest
     {
         return $this->createRequest(PurchaseCompleteRequest::class, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return \Omnipay\Common\Message\RequestInterface|FetchTransactionRequest
+     */
+    public function fetchTransaction(array $options = []): FetchTransactionRequest
+    {
+        return $this->createRequest(FetchTransactionRequest::class, $options);
     }
 
     public function getPaymentMethods(array $options = []): PurchaseRequest
