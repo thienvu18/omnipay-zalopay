@@ -44,6 +44,26 @@ abstract class AbstractRequest extends BaseAbstractRequest
         return $this->setParameter('key1', $value);
     }
 
+    public function getAppTransId(): string
+    {
+        return $this->getTransactionId();
+    }
+
+    public function setAppTransId(string $value)
+    {
+        return $this->setTransactionId($value);
+    }
+
+    public function getZpTransId(): string
+    {
+        return $this->getTransactionReference();
+    }
+
+    public function setZpTransId(string $value)
+    {
+        return $this->setTransactionReference($value);
+    }
+
     protected function getEndpoint()
     {
         return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;

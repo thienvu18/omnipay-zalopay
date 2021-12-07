@@ -28,7 +28,7 @@ trait InputParameterBag {
     private function requestToArray($request): array
     {
         if ('' === $content = $request->getContent()) {
-            throw new JsonException('Request body is empty.');
+            return [];
         }
 
         try {

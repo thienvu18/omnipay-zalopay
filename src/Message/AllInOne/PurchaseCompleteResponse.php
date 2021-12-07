@@ -2,14 +2,13 @@
 
 namespace Omnipay\ZaloPay\Message\AllInOne;
 
-use Omnipay\Common\Message\AbstractResponse;
-
+use Omnipay\ZaloPay\Message\AbstractResponse;
 
 class PurchaseCompleteResponse extends AbstractResponse
 {
     public function isSuccessful()
     {
-        return isset($this->data['status']) ? $this->data['status'] == 1 : false;
+        return $this->getStatus() == 1;
     }
 
     public function isRedirect()
@@ -19,37 +18,12 @@ class PurchaseCompleteResponse extends AbstractResponse
 
     public function isPending()
     {
-        return isset($this->data['status']) ? $this->data['status'] == 3 : false;
+        return $this->getStatus() == 3;
     }
 
-    public function getTransactionReference()
-    {
-        return null;
-    }
-
-    /**
-     * Response Message
-     *
-     * @return null|string A response message from the payment gateway
-     */
-    public function getMessage()
-    {
-        return null;
-    }
-
-    /**
-     * Response code
-     *
-     * @return null|string A response code from the payment gateway
-     */
-    public function getCode()
+    public function getStatus()
     {
         return isset($this->data['status']) ? $this->data['status'] : null;
-    }
-
-    public function getTransactionId()
-    {
-        return $this->data['app_trans_id'] ?? null;
     }
 
     public function getDiscountAmount()

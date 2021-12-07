@@ -33,12 +33,6 @@ class PurchaseRequest extends AbstractRequest
             }
         }
 
-        if (isset($parameters['redirect_url'])) {
-            $embedData = $this->getEmbedData();
-            $embedData['redirecturl'] = $parameters['redirect_url'];
-            $this->setEmbedData($embedData);
-        }
-
         return $this;
     }
 
@@ -72,9 +66,9 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('deviceInfo', $value);
     }
 
-    public function getBankCode()
+    public function getBankCode(): string
     {
-        return $this->getParameter('bankCode');
+        return $this->getParameter('bankCode') ?? '';
     }
 
     public function setBankCode(string $value)
@@ -99,6 +93,10 @@ class PurchaseRequest extends AbstractRequest
 
     public function setRedirectUrl(?string $value)
     {
+        $embedData = $this->getEmbedData();
+        $embedData['redirecturl'] = $value;
+        $this->setEmbedData($embedData);
+
         return $this->setParameter('redirectUrl', $value);
     }
 
@@ -152,7 +150,7 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('address', $value);
     }
 
-    public function getItemsJson()
+    public function getItemsJson(): string
     {
         $itemArray = [];
 
@@ -170,17 +168,17 @@ class PurchaseRequest extends AbstractRequest
         return json_encode($itemArray);
     }
 
-    public function getEmbedDataJson()
+    public function getEmbedDataJson(): string
     {
         return $this->getEmbedData() ? json_encode($this->getEmbedData()) : '{}';
     }
 
-    public function getDeviceInfoJson()
+    public function getDeviceInfoJson(): string
     {
         return $this->getDeviceInfo() ? json_encode($this->getDeviceInfo()) : '{}';
     }
 
-    public function getEndpoint()
+    public function getEndpoint(): string
     {
         return parent::getEndpoint() . '/create';
     }
@@ -193,7 +191,7 @@ class PurchaseRequest extends AbstractRequest
         return "{$this->getAppId()}|{$this->getTransactionId()}|{$this->getAppUser()}|{$this->getAmountInteger()}|{$this->getAppTime()}|{$this->getEmbedDataJson()}|{$this->getItemsJson()}";
     }
 
-    public function createResponse($data)
+    public function createResponse($data): PurchaseResponse
     {
         return $this->response = new PurchaseResponse($this, $data);
     }
@@ -214,7 +212,7 @@ class PurchaseRequest extends AbstractRequest
         ];
     }
 
-    public function getData()
+    public function getData(): array
     {
         $data = [];
 
@@ -226,7 +224,7 @@ class PurchaseRequest extends AbstractRequest
         $data['item'] = $this->getItemsJson();
         $data['description'] = $this->getDescription();
         $data['embed_data'] = $this->getEmbedDataJson();
-        $data['bank_code'] = $this->getBankCode() ?? '';
+        $data['bank_code'] = $this->getBankCode();
         $data['mac'] = $this->getSignature();
         $data['callback_url'] = $this->getCallbackUrl();
         $data['redirect_url'] = $this->getRedirectUrl();

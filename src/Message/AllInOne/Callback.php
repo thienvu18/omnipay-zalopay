@@ -32,16 +32,15 @@ class Callback extends AbstractIncomingRequest implements NotificationInterface
         }
     }
 
-    protected function getIncomingParameters(): array
+    protected function extractIncomingParameters($requestData): array
     {
-        $data = $this->getAllRequestData();
-        $paymentData = json_decode($data->get('data', '{}'), true);
+        $paymentData = json_decode($requestData->get('data', '{}'), true);
 
         try {
             return [
-                'mac' => $data->get('mac'),
-                'type' => $data->get('type'),
-                'payment_data' => $data->get('data'),
+                'mac' => $requestData->get('mac'),
+                'type' => $requestData->get('type'),
+                'payment_data' => $requestData->get('data'),
                 'appId' => $paymentData['app_id'],
                 'appTransId' => $paymentData['app_trans_id'],
                 'appTime' => $paymentData['app_time'],

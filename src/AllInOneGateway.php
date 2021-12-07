@@ -81,11 +81,6 @@ class AllInOneGateway extends AbstractGateway
      */
     public function purchase(array $options = []): PurchaseRequest
     {
-        $options = $options + [
-            'transactionId' => $this->createTransactionId($options['order_id'] ?? ''),
-            'appTime' => $this->createAppTime(),
-        ];
-
         return $this->createRequest(PurchaseRequest::class, $options);
     }
 
@@ -112,30 +107,12 @@ class AllInOneGateway extends AbstractGateway
         return $this->createRequest(GetPaymentMethodRequest::class, $options);
     }
 
+    /**
+     * {@inheritdoc}
+     * @return \Omnipay\Common\Message\NotificationInterface|Callback
+     */
     public function acceptNotification(array $options = array()): \Omnipay\Common\Message\NotificationInterface
     {
         return new Callback($this->httpClient, $this->httpRequest, array_replace($this->getParameters(), $options));
-    }
-
-    public function replyNotification(array $options = []): CallbackReturnRequest
-    {
-        return $this->createRequest(CallbackReturnRequest::class, $options);
-    }
-
-    protected function createTransactionId($orderId)
-    {
-        $now = new \DateTime('now', new \DateTimeZone('Asia/Ho_Chi_Minh'));
-
-        if ($orderId) {
-            return $now->format('ymdHisvu_') . $orderId;
-        } else {
-            return $now->format('ymdHisvu');
-        }
-    }
-
-    protected function createAppTime()
-    {
-        $now = new \DateTime();
-        return $now->getTimestamp() * 1000;
     }
 }

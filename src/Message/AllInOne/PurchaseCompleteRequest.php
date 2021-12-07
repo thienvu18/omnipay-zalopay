@@ -10,20 +10,18 @@ use Omnipay\ZaloPay\Support\Signature;
 
 class PurchaseCompleteRequest extends AbstractIncomingRequest
 {
-    protected function getIncomingParameters(): array
+    protected function extractIncomingParameters($requestData): array
     {
-        $data = $this->getAllRequestData();
-
         return [
-            'appId' => $data->get('appid'),
-            'transactionId' => $data->get('apptransid'),
-            'bankCode' => $data->get('bankcode'),
-            'pmcid' => $data->get('pmcid'),
-            'amount' => $data->get('amount'),
-            'discountAmount' => $data->get('discountamount'),
-            'status' => $data->get('status'),
-            'checksum' => $data->get('checksum'),
-            'currency' => $data->get('currency', 'VND'),
+            'appId' => $requestData->get('appid'),
+            'transactionId' => $requestData->get('apptransid'),
+            'bankCode' => $requestData->get('bankcode'),
+            'pmcid' => $requestData->get('pmcid'),
+            'amount' => $requestData->get('amount'),
+            'discountAmount' => $requestData->get('discountamount'),
+            'status' => $requestData->get('status'),
+            'checksum' => $requestData->get('checksum'),
+            'currency' => $requestData->get('currency', 'VND'),
         ];
     }
 
@@ -85,16 +83,6 @@ class PurchaseCompleteRequest extends AbstractIncomingRequest
     public function setChecksum(string $value)
     {
         return $this->setParameter('checksum', $value);
-    }
-
-    public function getKey2(): string
-    {
-        return $this->getParameter('key2');
-    }
-
-    public function setKey2(string $value)
-    {
-        return $this->setParameter('key2', $value);
     }
 
     protected function getSignatureData()

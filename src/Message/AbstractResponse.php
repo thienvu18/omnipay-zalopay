@@ -50,6 +50,11 @@ abstract class AbstractResponse extends BaseAbstractResponse
      */
     public function getTransactionId()
     {
+        return $this->getAppTransId();
+    }
+
+    public function getAppTransId()
+    {
         return $this->data['app_trans_id'] ?? null;
     }
 
@@ -57,6 +62,11 @@ abstract class AbstractResponse extends BaseAbstractResponse
      * @inheritDoc
      */
     public function getTransactionReference()
+    {
+        return $this->getZpTransId();
+    }
+
+    public function getZpTransId()
     {
         return $this->data['zp_trans_id'] ?? null;
     }
